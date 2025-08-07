@@ -1,0 +1,30 @@
+apiVersion: v2
+name: app-monitoring
+description: Stack de monitoria [Criando Primeira Versão]
+type: application
+version: 3.1.1
+appVersion: 1.0.0
+maintainers:
+  - name: Felipe Freitas
+    email: oliveife@gmail.com
+dependencies:
+  - name: kube-prometheus-stack
+    version: 35.2.0
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: kube-prometheus-stack.enabled
+  - name: thanos
+    version: 12.0.4
+    repository: https://charts.bitnami.com/bitnami
+    condition: thanos.enabled
+  - name: prometheus-blackbox-exporter
+    version: 5.8.1
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus-blackbox-exporter.enabled
+  - name: prometheus-pushgateway
+    version: 1.18.0
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus-pushgateway.enabled
+  - name: jaeger
+    version: 0.56.4
+    repository: https://jaegertracing.github.io/helm-charts
+    condition: jaeger.enabled

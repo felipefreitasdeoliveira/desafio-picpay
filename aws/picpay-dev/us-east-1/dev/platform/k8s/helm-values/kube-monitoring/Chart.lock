@@ -1,0 +1,18 @@
+dependencies:
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 35.2.0
+- name: thanos
+  repository: https://charts.bitnami.com/bitnami
+  version: 12.0.4
+- name: prometheus-blackbox-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 5.8.1
+- name: prometheus-pushgateway
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 1.18.0
+- name: jaeger
+  repository: https://jaegertracing.github.io/helm-charts
+  version: 0.56.4
+digest: sha256:7f30abf5941aef973e0d914859fff30ec468137aa45ba628f740b6f719dbb33d
+generated: "2023-02-14T15:30:48.624298-03:00"

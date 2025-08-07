@@ -1,0 +1,1 @@
+helm -n ingress upgrade --install ingress-nginx ingress-nginx/ingress-nginx
