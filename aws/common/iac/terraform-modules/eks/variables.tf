@@ -1,5 +1,5 @@
 variable "vpc_id" {
-  description = "ID of the VPC where the cluster security group will be provisioned"
+  description = "ID da VPC"
   type        = string
   default     = null
 }
@@ -12,12 +12,12 @@ variable "eks_cluster_name" {
   type        = string
 }
 variable "subnet_ids" {
-  description = "A list of subnet IDs where the nodes/node groups will be provisioned. If `control_plane_subnet_ids` is not provided, the EKS cluster control plane (ENIs) will be provisioned in these subnets"
+  description = "IDs das subnets privadas"
   type        = list(string)
   default     = []
 }
 variable "control_plane_subnet_ids" {
-  description = "A list of subnet IDs where the EKS cluster control plane (ENIs) will be provisioned. Used for expanding the pool of subnets used by nodes/node groups without replacing the EKS control plane"
+  description = "IDs das subnets públicas"
   type        = list(string)
   default     = []
 }
