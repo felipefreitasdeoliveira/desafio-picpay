@@ -10,6 +10,8 @@ DOCKER_REGISTRY := public.ecr.aws/p5o5s5p6/desafio-picpay
 IMAGE_TAG := $(shell git rev-parse --short HEAD)
 IMAGE_NAME := $(DOCKER_REGISTRY)/$(APP_NAME):$(IMAGE_TAG)
 TERRAGRUNT_DIR ?= aws/picpay-dev/us-east-1/dev/iac/terraform
+CHART_PATH_PLATFORM := aws/picpay-dev/us-east-1/dev/platform/k8s/helm-values
+
 
 # Comportamento padrão
 .PHONY: all build push helm-deploy 
@@ -26,9 +28,9 @@ push:
 	aws ecr-public get-login-password --region us-east-1 | podman login --username AWS --password-stdin $(DOCKER_REGISTRY)
 	podman push $(IMAGE_NAME)
 
-## Deploy via Helm
-helm-deploy:
-	@echo "--- Fazendo deploy Helm no namespace $(NAMESPACE) ---"
+## Deploy webp-app via Helm
+helm-install-web-app:
+	@echo "--- Fazendo deploy do helmcharts web-app ---"
 	helm upgrade --install $(APP_NAME) -f $(CHART_PATH)/values-$(ENVIRONMENT).yaml $(CHART_PATH) \
 		--namespace $(NAMESPACE) \
 		--create-namespace \
@@ -51,3 +53,21 @@ terragrunt_apply:
 terragrunt_destroy:
 	@echo "--- Destruindo recursos Terragrunt em: $(TERRAGRUNT_DIR) ---"
 	terragrunt run-all destroy --terragrunt-working-dir $(TERRAGRUNT_DIR)
+
+## Deploy manifests
+k_apply_ns:
+	@echo "--- Criando namespaces ---"
+	kubectl apply -f aws/picpay-dev/us-east-1/dev/platform/k8s/manifests/namespaces.yaml
+k_delete_ns:
+	@echo "--- Deletando namespaces ---"
+	kubectl delete -f aws/picpay-dev/us-east-1/dev/platform/k8s/manifests/namespaces.yaml
+
+## Deploy helmcharts nginx-ingress
+helm-install-nginx-ingress:
+	@echo "--- Fazendo deploy do helmcharts nginx-ingress ---"
+	helm upgrade --install nginx-ingress -f $(CHART_PATH_PLATFORM)/nginx-ingress/custom-values/values-dev.yaml $(CHART_PATH_PLATFORM)/nginx-ingress/ \
+		--namespace ingress 
+
+helm-uninstall-nginx-ingress:
+	@echo "--- Removendo deploy do helmcharts nginx-ingress ---"
+	helm uninstall nginx-ingress --namespace ingress 
