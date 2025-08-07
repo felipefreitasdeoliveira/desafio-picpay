@@ -31,7 +31,7 @@
 └── platform
     ├── k8s
     │   ├── helm-values
-    │   │   ├── monitoring
+    │   │   ├── kube-monitoring
     │   │   │   ├── Chart.yaml
     │   │   │   ├── charts
     │   │   │   ├── custom-values

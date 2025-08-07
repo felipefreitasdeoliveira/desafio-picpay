@@ -18,15 +18,15 @@ CHART_PATH_PLATFORM := aws/picpay-dev/us-east-1/dev/platform/k8s/helm-values
 
 all: build push helm-deploy terragrunt-plan
 
-## Build da imagem Podman
+## Build da imagem docker
 build:
-	@echo "--- Build imagem Podman: $(IMAGE_NAME) ---"
-	podman build -f $(DOCKERFILE) -t $(IMAGE_NAME) $(APP_PATH)
+	@echo "--- Build imagem docker: $(IMAGE_NAME) ---"
+	docker build --platform=linux/amd64 -f $(DOCKERFILE) -t $(IMAGE_NAME) $(APP_PATH)
 
 push:
 	@echo "--- Fazendo push da imagem: $(IMAGE_NAME) ---"
-	aws ecr-public get-login-password --region us-east-1 | podman login --username AWS --password-stdin $(DOCKER_REGISTRY)
-	podman push $(IMAGE_NAME)
+	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(DOCKER_REGISTRY)
+	docker push $(IMAGE_NAME)
 
 ## Deploy webp-app via Helm
 helm-install-web-app:
@@ -58,6 +58,7 @@ terragrunt_destroy:
 k_apply_ns:
 	@echo "--- Criando namespaces ---"
 	kubectl apply -f aws/picpay-dev/us-east-1/dev/platform/k8s/manifests/namespaces.yaml
+
 k_delete_ns:
 	@echo "--- Deletando namespaces ---"
 	kubectl delete -f aws/picpay-dev/us-east-1/dev/platform/k8s/manifests/namespaces.yaml
@@ -70,4 +71,14 @@ helm-install-nginx-ingress:
 
 helm-uninstall-nginx-ingress:
 	@echo "--- Removendo deploy do helmcharts nginx-ingress ---"
-	helm uninstall nginx-ingress --namespace ingress 
+	helm uninstall nginx-ingress --namespace ingress
+
+## Deploy helmcharts kube-monitoring
+helm-install-kube-monitoring:
+	@echo "--- Fazendo deploy do helmcharts kube-monitoring ---"
+	helm upgrade --install kube-prometheus-stack -f $(CHART_PATH_PLATFORM)/kube-monitoring/custom-values/values-dev.yaml $(CHART_PATH_PLATFORM)/kube-monitoring/ \
+		--namespace kube-monitoring
+
+helm-uninstall-kube-monitoring:
+	@echo "--- Removendo deploy do helmcharts kube-monitoring ---"
+	helm uninstall kube-prometheus-stack --namespace kube-monitoring
