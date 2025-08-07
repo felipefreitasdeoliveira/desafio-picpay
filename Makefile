@@ -9,32 +9,45 @@ CHART_PATH := aws/picpay-dev/us-east-1/dev/deployments/helm-charts/$(APP_NAME)
 DOCKER_REGISTRY := public.ecr.aws/p5o5s5p6/desafio-picpay
 IMAGE_TAG := $(shell git rev-parse --short HEAD)
 IMAGE_NAME := $(DOCKER_REGISTRY)/$(APP_NAME):$(IMAGE_TAG)
-
+TERRAGRUNT_DIR ?= aws/picpay-dev/us-east-1/dev/iac/terraform
 
 # Comportamento padrão
-.PHONY: all build push helm-deploy
+.PHONY: all build push helm-deploy 
 
-all: build push helm-deploy
+all: build push helm-deploy terragrunt-plan
 
-## 🏗️  Build da imagem Podman
+## Build da imagem Podman
 build:
-	@echo "🏗️  Buildando imagem Podman: $(IMAGE_NAME)"
+	@echo "--- Build imagem Podman: $(IMAGE_NAME) ---"
 	podman build -f $(DOCKERFILE) -t $(IMAGE_NAME) $(APP_PATH)
 
-## 🚀 Push da imagem para o ECR
 push:
-	@echo "🚀 Fazendo push da imagem: $(IMAGE_NAME)"
+	@echo "--- Fazendo push da imagem: $(IMAGE_NAME) ---"
 	aws ecr-public get-login-password --region us-east-1 | podman login --username AWS --password-stdin $(DOCKER_REGISTRY)
 	podman push $(IMAGE_NAME)
 
-## 🎯 Deploy via Helm
+## Deploy via Helm
 helm-deploy:
-	@echo "🎯 Fazendo deploy Helm no namespace $(NAMESPACE)"
+	@echo "--- Fazendo deploy Helm no namespace $(NAMESPACE) ---"
 	helm upgrade --install $(APP_NAME) -f $(CHART_PATH)/values-$(ENVIRONMENT).yaml $(CHART_PATH) \
 		--namespace $(NAMESPACE) \
 		--create-namespace \
 		--set image.repository=$(DOCKER_REGISTRY)/$(APP_NAME) \
 		--set image.tag=$(IMAGE_TAG)
 
+## Terragrunt
+terragrunt_init:
+	@echo "--- Inicializando Terragrunt em: $(TERRAGRUNT_DIR) ---"
+	terragrunt run-all init --terragrunt-working-dir $(TERRAGRUNT_DIR)
 
+terragrunt_plan:
+	@echo "--- Gerando plan do Terragrunt em: $(TERRAGRUNT_DIR) ---"
+	terragrunt run-all plan --terragrunt-working-dir $(TERRAGRUNT_DIR)
 
+terragrunt_apply:
+	@echo "--- Aplicando Terragrunt em: $(TERRAGRUNT_DIR) ---"
+	terragrunt run-all apply --terragrunt-working-dir $(TERRAGRUNT_DIR)
+
+terragrunt_destroy:
+	@echo "--- Destruindo recursos Terragrunt em: $(TERRAGRUNT_DIR) ---"
+	terragrunt run-all destroy --terragrunt-working-dir $(TERRAGRUNT_DIR)
