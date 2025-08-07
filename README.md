@@ -87,3 +87,14 @@ make terragrunt_init
 make terragrunt_apply
 make terragrunt_destroy
 ```
+
+# 🌐 Recursos Criados no Ambiente
+
+Abaixo estão os principais recursos disponíveis após a implantação da infraestrutura e dos serviços na AWS:
+
+## 🔗 Endpoints de Acesso
+
+- [Web App](http://web-app.compwave.com.br) – Aplicação de exemplo implantada no cluster EKS  
+- [Grafana](http://grafana.compwave.com.br) – Dashboard de visualização de métricas e gráficos  
+- [Prometheus](http://prometheus.compwave.com.br) – Coleta e armazenamento de métricas do cluster  
+- [Alertmanager](http://alertmanager.compwave.com.br) – Gerenciamento e roteamento de alertas

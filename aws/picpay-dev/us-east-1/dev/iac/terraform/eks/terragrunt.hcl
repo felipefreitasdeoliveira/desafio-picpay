@@ -39,6 +39,7 @@ inputs = {
     eks-pod-identity-agent = {
       before_compute = true
     }
+    aws-ebs-csi-driver = {}
   }
 
   eks_managed_node_groups = local.node_groups_config.locals.eks_managed_node_groups
