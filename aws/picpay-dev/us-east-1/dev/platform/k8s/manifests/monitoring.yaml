@@ -10,16 +10,6 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: grafana.compwave.com.br
-    http:
-      paths:
-      - backend:
-          service:
-            name: kube-prometheus-stack-grafana
-            port:
-              number: 3000
-        path: /
-        pathType: ImplementationSpecific
   - host: prometheus.compwave.com.br
     http:
       paths:

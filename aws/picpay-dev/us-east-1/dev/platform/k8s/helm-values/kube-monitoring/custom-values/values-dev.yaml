@@ -24,6 +24,17 @@ kube-prometheus-stack:
       selector:
         component: kube-proxy
   grafana:
+    defaultDashboardsTimezone: UTC-03:00
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations: {}
+        # kubernetes.io/ingress.class: nginx
+        # kubernetes.io/tls-acme: "true"
+      labels: {}
+      hosts:
+        - grafana.compwave.com.br
+      path: /
     image:
       tag: "8.5.14"
 

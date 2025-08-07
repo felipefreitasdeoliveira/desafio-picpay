@@ -36,6 +36,11 @@ helm-install-web-app:
 		--create-namespace \
 		--set image.repository=$(DOCKER_REGISTRY)/$(APP_NAME) \
 		--set image.tag=$(IMAGE_TAG)
+helm-deploy-web-app:
+	@echo "--- Fazendo deploy do helmcharts web-app ---"
+	helm upgrade --install $(APP_NAME) -f $(CHART_PATH)/values-$(ENVIRONMENT).yaml $(CHART_PATH) \
+		--namespace $(NAMESPACE) \
+		--create-namespace \
 
 ## Terragrunt
 terragrunt_init:
