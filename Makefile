@@ -2,6 +2,7 @@
 APP_PATH := aws/picpay-dev/us-east-1/dev/deployments/app
 DOCKERFILE := $(APP_PATH)/Dockerfile
 HTML_DIR := $(APP_PATH)/html
+ENVIRONMENT := dev
 APP_NAME := web-app
 NAMESPACE := default
 CHART_PATH := aws/picpay-dev/us-east-1/dev/deployments/helm-charts/$(APP_NAME)
@@ -29,7 +30,7 @@ push:
 ## 🎯 Deploy via Helm
 helm-deploy:
 	@echo "🎯 Fazendo deploy Helm no namespace $(NAMESPACE)"
-	helm upgrade --install $(APP_NAME) -f $(CHART_PATH)/values.yaml $(CHART_PATH) \
+	helm upgrade --install $(APP_NAME) -f $(CHART_PATH)/values-$(ENVIRONMENT).yaml $(CHART_PATH) \
 		--namespace $(NAMESPACE) \
 		--create-namespace \
 		--set image.repository=$(DOCKER_REGISTRY)/$(APP_NAME) \

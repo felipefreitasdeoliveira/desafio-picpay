@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desafio Staff Picpay</title>
+  <style>
+    :root {
+      --bg-color: #000000;
+      --primary-color: #11C76F;
+      --light-green: #98FF98;
+      --card-bg: #1a1a1a;
+      --text-color: #e0ffe0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header {
+      background-color: #111111;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+    }
+
+    .header img {
+      height: 40px;
+      filter: drop-shadow(0 0 4px var(--primary-color));
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      padding: 30px 15px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(17, 199, 111, 0.3);
+      padding: 40px 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid var(--primary-color);
+    }
+
+    .profile-pic {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary-color);
+      margin-bottom: 20px;
+      box-shadow: 0 0 12px var(--primary-color);
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+
+    p {
+      font-size: 1.1em;
+      color: var(--text-color);
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .footer {
+      background-color: #111111;
+      color: var(--primary-color);
+      padding: 15px;
+      text-align: center;
+      font-size: 0.85em;
+      border-top: 1px solid var(--primary-color);
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="card">
+      <img src="https://avatars.githubusercontent.com/u/9919?s=280&v=4" alt="Foto do candidato" class="profile-pic" />
+      <h1>Staff Picpay Challenge - 2025</h1>
+      <p>Participação no desafio na Picpay.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2025 Staff Picpay Challenge. Todos os direitos reservados.
+  </div>
+
+</body>
+
+</html>
