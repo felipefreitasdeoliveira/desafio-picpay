@@ -1,12 +1,7 @@
 
-# Deploy de Aplicação Web com Podman, Docker Hub e Helm
+# Estrutura de Diretórios
 
-Este guia mostra como buildar, testar localmente, enviar a imagem para o Docker Hub e realizar o deploy da aplicação em um cluster Kubernetes utilizando Helm.
-
----
-## Estrutura de Diretórios
-
-Estrutura de diretórios do projeto.
+## Estrutura de diretórios do projeto.
 
 ```hcl
 .
