@@ -20,12 +20,3 @@ spec:
               number: 9090
         path: /
         pathType: ImplementationSpecific
-    http:
-      paths:
-      - backend:
-          service:
-            name: prom-stack-infra-alertmanager
-            port:
-              number: 9093
-        path: /
-        pathType: ImplementationSpecific

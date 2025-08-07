@@ -24,6 +24,9 @@ kube-prometheus-stack:
       selector:
         component: kube-proxy
   grafana:
+    serviceMonitor:
+      labels:
+        prometheus/instance: prom-stack-infra
     defaultDashboardsTimezone: UTC-03:00
     ingress:
       enabled: true
@@ -37,7 +40,17 @@ kube-prometheus-stack:
       path: /
     image:
       tag: "8.5.14"
-
+  alertmanager:
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hosts: 
+        - alertmanager.compwave.com.br
+    alertmanagerSpec:
+      externalUrl: https://alertmanager.compwave.com.br
+      alertmanagerConfigSelector:
+        matchLabels:
+          alertmanagerConfig: alertmanager
 thanos:
   enabled: false
   # Default values: https://artifacthub.io/packages/helm/bitnami/thanos/10.3.10?modal=values
