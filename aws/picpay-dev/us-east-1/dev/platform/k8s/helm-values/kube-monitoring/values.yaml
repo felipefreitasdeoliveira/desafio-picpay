@@ -1,0 +1,23 @@
+kube-prometheus-stack:
+  enabled: false
+  # Default values: https://github.com/prometheus-community/helm-charts/blob/kube-prometheus-stack-35.2.0/charts/kube-prometheus-stack/values.yaml
+
+  grafana:
+    image:
+      tag: "8.5.14"
+
+thanos:
+  enabled: false
+  # Default values: https://artifacthub.io/packages/helm/bitnami/thanos/10.3.10?modal=values
+
+prometheus-blackbox-exporter:
+  enabled: false
+  # Default values: https://github.com/prometheus-community/helm-charts/blob/prometheus-blackbox-exporter-5.8.1/charts/prometheus-blackbox-exporter/values.yaml
+
+prometheus-pushgateway:
+  enabled: false
+  # Default values: https://github.com/prometheus-community/helm-charts/blob/prometheus-pushgateway-1.18.0/charts/prometheus-pushgateway/values.yaml
+
+jaeger:
+  enabled: false
+  # Default values: https://github.com/jaegertracing/helm-charts/blob/jaeger-0.56.4/charts/jaeger/values.yaml

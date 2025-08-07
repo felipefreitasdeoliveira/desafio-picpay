@@ -21,7 +21,7 @@ all: build push helm-deploy terragrunt-plan
 ## Build da imagem docker
 build:
 	@echo "--- Build imagem docker: $(IMAGE_NAME) ---"
-	docker build --platform=linux/amd64 -f $(DOCKERFILE) -t $(IMAGE_NAME) $(APP_PATH)
+	docker build --platform linux/amd64 -f $(DOCKERFILE) -t $(IMAGE_NAME) $(APP_PATH)
 
 push:
 	@echo "--- Fazendo push da imagem: $(IMAGE_NAME) ---"
